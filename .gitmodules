@@ -1,0 +1,3 @@
+[submodule "Google_Docs_proto"]
+	path = Google_Docs_proto
+	url = git@github.com:Ozodbek2129/Google_Docs_proto.git
