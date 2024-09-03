@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"api_gateway/config"
+	"api_gateway/config"	
 	"api_gateway/genproto/user"
+	"api_gateway/genproto/docs"
 	"api_gateway/pkg/logger"
 	"log/slog"
 
@@ -14,6 +15,7 @@ import (
 type Handler struct {
 	UserService user.UserServiceClient
 	Log         *slog.Logger
+	DocsService docs.DocsServiceClient
 	// Enforcer        *casbin.Enforcer
 }
 
@@ -25,10 +27,17 @@ func NewHandler() *Handler {
 		panic(err)
 	}
 
+	docss, err := grpc.Dial(conf.DOCS_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		panic(err)
+	}
+
 	users := user.NewUserServiceClient(userr)
+	docs := docs.NewDocsServiceClient(docss)
 
 	return &Handler{
 		UserService: users,
 		Log:         logger.NewLogger(),
+		DocsService: docs,
 	}
 }
