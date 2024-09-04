@@ -89,7 +89,7 @@ func (h Handler) SearchDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.CreateDoc true "Request body for getting all documents"
+// @Param        get_all body models.CreateDoc true "Request body for getting all documents"
 // @Success      200    {object}  doccs.GetAllDocumentsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
@@ -131,7 +131,7 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.CreateDoc true "Request body for adding document"
+// @Param        update body models.CreateDoc true "Request body for adding document"
 // @Success      200    {object}  doccs.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
@@ -173,7 +173,7 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.CreateDoc true "Request body for deleting document"
+// @Param        delete body models.CreateDoc true "Request body for deleting document"
 // @Success      200    {object}  doccs.DeleteDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
@@ -215,7 +215,7 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.CreateDoc true "Request body for sharing document"
+// @Param        share body models.CreateDoc true "Request body for sharing document"
 // @Success      200    {object}  doccs.ShareDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string

@@ -1,0 +1,463 @@
+definitions:
+  doccs.CreateDocumentRes:
+    properties:
+      author_id:
+        type: string
+      docs_id:
+        type: string
+      title:
+        type: string
+    type: object
+  doccs.DeleteDocumentRes:
+    properties:
+      message:
+        type: string
+    type: object
+  doccs.GetAllDocumentsRes:
+    properties:
+      documents:
+        items:
+          $ref: '#/definitions/doccs.GetDocumentRes'
+        type: array
+    type: object
+  doccs.GetAllVersionsRes:
+    properties:
+      documents_version:
+        items:
+          $ref: '#/definitions/doccs.GetDocumentRes'
+        type: array
+    type: object
+  doccs.GetDocumentRes:
+    properties:
+      author_id:
+        type: string
+      content:
+        type: string
+      docs_id:
+        type: string
+      last_updated:
+        type: string
+      title:
+        type: string
+      version:
+        type: integer
+    type: object
+  doccs.RestoreVersionRes:
+    properties:
+      message:
+        type: string
+    type: object
+  doccs.SearchDocumentRes:
+    properties:
+      documents:
+        items:
+          $ref: '#/definitions/doccs.GetDocumentRes'
+        type: array
+    type: object
+  doccs.ShareDocumentRes:
+    properties:
+      message:
+        type: string
+    type: object
+  doccs.UpdateDocumentRes:
+    properties:
+      message:
+        type: string
+    type: object
+  models.CreateDoc:
+    properties:
+      title:
+        type: string
+    type: object
+  models.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  models.GetAllVersions:
+    properties:
+      title:
+        type: string
+    type: object
+  user.DeleteUserr:
+    properties:
+      message:
+        type: string
+    type: object
+  user.GetUserResponse:
+    properties:
+      user:
+        $ref: '#/definitions/user.User'
+    type: object
+  user.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+    type: object
+  user.UpdateUserRespose:
+    properties:
+      message:
+        type: string
+    type: object
+  user.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server for Api-gateway Service
+  title: Api Gateway
+  version: "1.0"
+paths:
+  /api/docs/DeleteDocument:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes a document.
+      parameters:
+      - description: Request body for deleting document
+        in: body
+        name: delete
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.DeleteDocumentRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete Document
+      tags:
+      - docs
+  /api/docs/GetAllDocuments:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint gets all documents.
+      parameters:
+      - description: Request body for getting all documents
+        in: body
+        name: get_all
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.GetAllDocumentsRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all Document
+      tags:
+      - docs
+  /api/docs/ShareDocument:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint shares a document.
+      parameters:
+      - description: Request body for sharing document
+        in: body
+        name: share
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.ShareDocumentRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Share Document
+      tags:
+      - docs
+  /api/docs/UpdateDocument:
+    put:
+      consumes:
+      - application/json
+      description: This endpoint updates a document.
+      parameters:
+      - description: Request body for adding document
+        in: body
+        name: update
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.UpdateDocumentRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update Document
+      tags:
+      - docs
+  /api/docs/createDocument:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint creates a new document.
+      parameters:
+      - description: Title of the document
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.CreateDocumentRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Create Document
+      tags:
+      - docs
+  /api/docs/searchDocument:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint searches for a document by title and document ID.
+      parameters:
+      - description: Title of the document
+        in: query
+        name: title
+        type: string
+      - description: Document ID
+        in: query
+        name: docsId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.SearchDocumentRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Search Document
+      tags:
+      - docs
+  /api/user/getbyuser/{email}:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint retrieves user details by email.
+      parameters:
+      - description: User Email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.GetUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get user by email
+      tags:
+      - user
+  /api/version/GetAllVersions:
+    get:
+      consumes:
+      - application/json
+      description: This endpoint gets all documents version.
+      parameters:
+      - description: Request body for getting all versions of document
+        in: body
+        name: get_all
+        required: true
+        schema:
+          $ref: '#/definitions/models.GetAllVersions'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.GetAllVersionsRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get All Document Version
+      tags:
+      - docs
+  /api/vesion/RestoreVersion:
+    put:
+      consumes:
+      - application/json
+      description: This endpoint restores a document's version.
+      parameters:
+      - description: Request body for adding document
+        in: body
+        name: restore
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDoc'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/doccs.RestoreVersionRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Restore Document's Version
+      tags:
+      - docs
+  /user/delete_user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This endpoint deletes a user based on the provided user ID.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.DeleteUserr'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete user
+      tags:
+      - user
+  /user/update_user:
+    put:
+      consumes:
+      - application/json
+      description: This endpoint updates the user's details based on the provided
+        information.
+      parameters:
+      - description: User Update Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UpdateUserRespose'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update user details
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
