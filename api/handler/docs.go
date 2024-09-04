@@ -63,7 +63,7 @@ func (h Handler) CreateDocument(c *gin.Context) {
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /docs/createDocument [get]
-func (h Handler) SearchDocument(c *gin.Context) { //////////////////////////////////////////
+func (h Handler) SearchDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
 		h.Log.Error("User ID not found in context")
@@ -81,7 +81,7 @@ func (h Handler) SearchDocument(c *gin.Context) { //////////////////////////////
 		return
 	}
 
-	req := pb.SearchDocumentReq{AuthorId: id, Title: doc.Title}
+	req := pb.SearchDocumentReq{AuthorId: id, Title: doc.Title, DocsId: doc.DocsId}
 
 	res, err := h.DocsService.SearchDocument(c, &req)
 	if err != nil {
@@ -106,7 +106,7 @@ func (h Handler) SearchDocument(c *gin.Context) { //////////////////////////////
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /docs/GetAllDocuments [get]
-func (h Handler) GetAllDocuments(c *gin.Context) { ////////////////////////////////////////////
+func (h Handler) GetAllDocuments(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
 		h.Log.Error("User ID not found in context")
@@ -235,7 +235,7 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /docs/createDocument [post]
-func (h Handler) ShareDocument(c *gin.Context) { /////////////////////////////////////////////////////
+func (h Handler) ShareDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
 		h.Log.Error("User ID not found in context")
@@ -253,9 +253,9 @@ func (h Handler) ShareDocument(c *gin.Context) { ///////////////////////////////
 		return
 	}
 
-	req := pb.ShareDocumentReq{AuthorId: id, Title: doc.Title}
+	req := pb.ShareDocumentReq{Title: doc.Title, RecipientEmail: doc.RecipientEmail, Permissions: doc.Permissions, UserId: doc.UserId, Id: doc.Id}
 
-	res, err := h.DocsService.CreateDocument(c, &req)
+	res, err := h.DocsService.ShareDocument(c, &req)
 	if err != nil {
 		h.Log.Error("CreateDocument function have problems.", "error", err.Error())
 		c.AbortWithStatusJSON(500, gin.H{

@@ -25,33 +25,31 @@ type GetAllDocuments struct {
 type UpdateDocument struct {
 	Title   string `json:"title"`
 	Content string `json:"content"`
-	DocsId  string `json:"docs_id"`////////////////////////////////////
+	DocsId  string `json:"docs_id"`
 }
-
 
 type DeleteDocument struct {
-	Title   string `json:"title"`
+	Title string `json:"title"`
 }
-
 
 type ShareDocument struct {
-	Title   string `json:"title"`
-	RecipientEmail string `json:"recipient_email"`//////////////////////////////
-	Permissions string `json:"permissions"`
+	Title          string `json:"title"`
+	RecipientEmail string `json:"recipient_email"`
+	Permissions    string `json:"permissions"`
+	UserId         string `json:"user_id"`
+	Id             string `json:"id"`
 }
 
-
 type SearchDocument struct {
-	Title   string `json:"title"`
-	DocsId  string `json:"docs_id"`////////////////////////////////////
+	Title  string `json:"title"`
+	DocsId string `json:"docs_id"`
 }
 
 type GetAllVersions struct {
-	Title   string `json:"title"`
+	Title string `json:"title"`
 }
-
 
 type RestoreVersion struct {
 	Title   string `json:"title"`
-	Version int32 `json:"version"`
+	Version int32  `json:"version"`
 }
