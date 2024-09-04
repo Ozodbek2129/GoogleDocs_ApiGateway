@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"api_gateway/genproto/docs"
+	"api_gateway/genproto/doccs"
 	"api_gateway/genproto/user"
 	"log/slog"
 
@@ -11,11 +11,11 @@ import (
 type Handler struct {
 	UserService user.UserServiceClient
 	Log         *slog.Logger
-	DocsService docs.DocsServiceClient
+	DocsService doccs.DocsServiceClient
 	Enforcer    *casbin.Enforcer
 }
 
-func NewHandler(user user.UserServiceClient, docs docs.DocsServiceClient, logger *slog.Logger, Enforcer *casbin.Enforcer) *Handler {
+func NewHandler(user user.UserServiceClient, docs doccs.DocsServiceClient, logger *slog.Logger, Enforcer *casbin.Enforcer) *Handler {
 	return &Handler{
 		UserService: user,
 		Log:         logger,

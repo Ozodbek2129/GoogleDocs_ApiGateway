@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	pb "api_gateway/genproto/docs"
+	pb "api_gateway/genproto/doccs"
 	"api_gateway/models"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +16,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param        body body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  docs.CreateDocumentRes
+// @Success      200    {object}  doccs.CreateDocumentRes
 // @Failure      400    {object}  string
 
 // @Failure      500    {object}  string
@@ -54,15 +54,16 @@ func (h Handler) CreateDocument(c *gin.Context) {
 }
 
 // @Summary      Search Document
-// @Description  This endpoint searches for a document.
+// @Description  This endpoint searches for a document by title and document ID.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body    body    models.SearchDocument    true    "Request body for searching document"
-// @Success      200     {object}  docs.SearchDocumentRes
-// @Failure      400     {object}  string
-// @Failure      500     {object}  string
-// @Router       /api/docs/SearchDocument [get]
+// @Param        title  query  string  false "Title of the document"
+// @Param        docsId query  string  false "Document ID"
+// @Success      200    {object}  doccs.SearchDocumentRes
+// @Failure      400    {object}  models.Error
+// @Failure      500    {object}  models.Error
+// @Router       /api/docs/searchDocument [get]
 func (h Handler) SearchDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -73,15 +74,10 @@ func (h Handler) SearchDocument(c *gin.Context) {
 	id := userId.(string)
 	fmt.Println(id)
 
-	var doc models.SearchDocument
+	title := c.Query("title")
+	docsId := c.Query("docsId")
 
-	if err := c.ShouldBindJSON(&doc); err != nil {
-		h.Log.Error("Error binding JSON: ", "error", err)
-		c.JSON(400, models.Error{Message: err.Error()})
-		return
-	}
-
-	req := pb.SearchDocumentReq{AuthorId: id, Title: doc.Title, DocsId: doc.DocsId}
+	req := pb.SearchDocumentReq{AuthorId: id, Title: title, DocsId: docsId}
 
 	res, err := h.DocsService.SearchDocument(c, &req)
 	if err != nil {
@@ -101,7 +97,7 @@ func (h Handler) SearchDocument(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for getting all documents"
-// @Success      200    {object}  docs.GetAllDocumentsRes
+// @Success      200    {object}  doccs.GetAllDocumentsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/docs/GetAllDocuments [get]
@@ -143,7 +139,7 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  docs.UpdateDocumentRes
+// @Success      200    {object}  doccs.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/docs/UpdateDocument [put]
@@ -185,7 +181,7 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for deleting document"
-// @Success      200    {object}  docs.DeleteDocumentRes
+// @Success      200    {object}  doccs.DeleteDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/docs/DeleteDocument [delete]
@@ -227,7 +223,7 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for sharing document"
-// @Success      200    {object}  docs.ShareDocumentRes
+// @Success      200    {object}  doccs.ShareDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/docs/ShareDocument [post]

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	pb "api_gateway/genproto/docs"
+	pb "api_gateway/genproto/doccs"
 	"api_gateway/models"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +16,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param        body models.GetAllVersions true "Request body for getting all versions of document"
-// @Success      200    {object}  pb.GetAllVersionsRes
+// @Success      200    {object}  doccs.GetAllVersionsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/version/GetAllVersions [get]
@@ -59,7 +59,7 @@ func (h Handler) GetAllVersions(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  pb.RestoreVersionRes
+// @Success      200    {object}  doccs.RestoreVersionRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /api/vesion/RestoreVersion [put]

@@ -2,7 +2,7 @@ package service
 
 import (
 	"api_gateway/config"
-	"api_gateway/genproto/docs"
+	"api_gateway/genproto/doccs"
 	"api_gateway/genproto/user"
 
 	"google.golang.org/grpc"
@@ -11,19 +11,19 @@ import (
 
 type ServiceManager interface {
 	UserService() user.UserServiceClient
-	Docsservice() docs.DocsServiceClient
+	Docsservice() doccs.DocsServiceClient
 }
 
 type serviceManagerImpl struct {
 	userClient    user.UserServiceClient
-	docsClient docs.DocsServiceClient
+	docsClient doccs.DocsServiceClient
 }
 
 func (s *serviceManagerImpl) UserService() user.UserServiceClient {
 	return s.userClient
 }
 
-func (s *serviceManagerImpl) Docsservice() docs.DocsServiceClient {
+func (s *serviceManagerImpl) Docsservice() doccs.DocsServiceClient {
 	return s.docsClient
 }
 
@@ -48,6 +48,6 @@ func NewServiceManager() (ServiceManager, error) {
 
 	return &serviceManagerImpl{
 		userClient:         user.NewUserServiceClient(connUser),
-		docsClient:       docs.NewDocsServiceClient(connDocs),
+		docsClient:       doccs.NewDocsServiceClient(connDocs),
 	}, nil
 }
