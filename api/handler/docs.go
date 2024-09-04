@@ -106,7 +106,7 @@ func (h Handler) SearchDocument(c *gin.Context) { //////////////////////////////
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
 // @Router       /docs/GetAllDocuments [get]
-func (h Handler) GetAllDocuments(c *gin.Context) {////////////////////////////////////////////
+func (h Handler) GetAllDocuments(c *gin.Context) { ////////////////////////////////////////////
 	userId, exists := c.Get("user_id")
 	if !exists {
 		h.Log.Error("User ID not found in context")
