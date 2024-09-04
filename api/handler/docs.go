@@ -15,11 +15,10 @@ import (
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  doccs.CreateDocumentRes
-// @Failure      400    {object}  string
-
-// @Failure      500    {object}  string
+// @Param        title  query  string  false "Title of the document"
+// @Success      200   {object}  doccs.CreateDocumentRes
+// @Failure      400   {object}  models.Error
+// @Failure      500   {object}  models.Error
 // @Router       /api/docs/createDocument [post]
 func (h Handler) CreateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
@@ -31,15 +30,9 @@ func (h Handler) CreateDocument(c *gin.Context) {
 	id := userId.(string)
 	fmt.Println(id)
 
-	var doc models.CreateDoc
+	title := c.Query("title")
 
-	if err := c.ShouldBindJSON(&doc); err != nil {
-		h.Log.Error("Error binding JSON: ", "error", err)
-		c.JSON(400, models.Error{Message: err.Error()})
-		return
-	}
-
-	req := pb.CreateDocumentReq{AuthorId: id, Title: doc.Title}
+	req := pb.CreateDocumentReq{AuthorId: id, Title: title}
 
 	res, err := h.DocsService.CreateDocument(c, &req)
 	if err != nil {
