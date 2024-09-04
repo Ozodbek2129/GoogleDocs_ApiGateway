@@ -19,7 +19,7 @@ import (
 // @Success      200    {object}  pb.GetAllVersionsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/GetAllVersions [get]
+// @Router       /api/version/GetAllVersions [get]
 func (h Handler) GetAllVersions(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -62,7 +62,7 @@ func (h Handler) GetAllVersions(c *gin.Context) {
 // @Success      200    {object}  pb.RestoreVersionRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/RestoreVersion [post]
+// @Router       /api/vesion/RestoreVersion [put]
 func (h Handler) RestoreVersion(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {

@@ -15,11 +15,12 @@ import (
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  pb.CreateDocumentRes
+// @Param        body body models.CreateDoc true "Request body for adding document"
+// @Success      200    {object}  docs.CreateDocumentRes
 // @Failure      400    {object}  string
+
 // @Failure      500    {object}  string
-// @Router       /docs/createDocument [post]
+// @Router       /api/docs/createDocument [post]
 func (h Handler) CreateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -52,17 +53,16 @@ func (h Handler) CreateDocument(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary      Search Document
-// @Description  This endpoint search a document.
+// @Description  This endpoint searches for a document.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        body models.SearchDocument true "Request body for searching document"
-// @Success      200    {object}  pb.CreateDocumentRes
-// @Failure      400    {object}  string
-// @Failure      500    {object}  string
-// @Router       /docs/createDocument [get]
+// @Param        body    body    models.SearchDocument    true    "Request body for searching document"
+// @Success      200     {object}  docs.SearchDocumentRes
+// @Failure      400     {object}  string
+// @Failure      500     {object}  string
+// @Router       /api/docs/SearchDocument [get]
 func (h Handler) SearchDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -95,17 +95,16 @@ func (h Handler) SearchDocument(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary      Get all Document
 // @Description  This endpoint gets all documents.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for getting all documents"
-// @Success      200    {object}  pb.GetAllDocumentsRes
+// @Success      200    {object}  docs.GetAllDocumentsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/GetAllDocuments [get]
+// @Router       /api/docs/GetAllDocuments [get]
 func (h Handler) GetAllDocuments(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -138,17 +137,16 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary      Update Document
 // @Description  This endpoint updates a document.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for adding document"
-// @Success      200    {object}  pb.UpdateDocumentRes
+// @Success      200    {object}  docs.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/UpdateDocument [put]
+// @Router       /api/docs/UpdateDocument [put]
 func (h Handler) UpdateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -181,17 +179,16 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary      Delete Document
 // @Description  This endpoint deletes a document.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for deleting document"
-// @Success      200    {object}  pb.DeleteDocumentRes
+// @Success      200    {object}  docs.DeleteDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/DeleteDocument [put]
+// @Router       /api/docs/DeleteDocument [delete]
 func (h Handler) DeleteDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -224,17 +221,16 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary      Share Document
 // @Description  This endpoint shares a document.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
 // @Param        body models.CreateDoc true "Request body for sharing document"
-// @Success      200    {object}  pb.ShareDocumentRes
+// @Success      200    {object}  docs.ShareDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/createDocument [post]
+// @Router       /api/docs/ShareDocument [post]
 func (h Handler) ShareDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
