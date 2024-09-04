@@ -57,18 +57,37 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 	
 	policies := [][]string{
 		//user
-		{"admin", "api/user/profile/:id", "GET"},
-		{"admin", "api/user/updateUser/:id", "PUT"},
-		{"admin", "api/user/email/:email", "GET"},
+		{"admin", "api/user/getbyuser/:email", "GET"},
+		{"admin", "api/user/update_user", "PUT"},
+		{"admin", "api/user/delete_user/:id", "DELETE"},
 
-		{"patient", "api/user/profile/:id", "GET"},
-		{"patient", "api/user/updateUser/:id", "PUT"},
-		{"patient", "api/user/email/:email", "GET"},
+		{"user", "api/user/getbyuser/:email", "GET"},
+		{"user", "api/user/update_user", "PUT"},
+		{"user", "api/user/delete_user/:id", "DELETE"},
 
-		{"doctor", "api/user/profile/:id", "GET"},
-		{"doctor", "api/user/updateUser/:id", "PUT"},
-		{"doctor", "api/user/email/:email", "GET"},
 
+		// docs
+		{"admin", "api/user/docs/createDocument", "POST"},
+		{"admin", "api/user/docs/SearchDocument", "GET"},
+		{"admin", "api/user/docs/GetAllDocuments", "GET"},
+		{"admin", "api/user/docs/UpdateDocument", "PUT"},
+		{"admin", "api/user/docs/DeleteDocument", "DELETE"},
+		{"admin", "api/user/docs/ShareDocument", "POST"},
+
+		{"user", "api/user/docs/createDocument", "POST"},
+		{"user", "api/user/docs/SearchDocument", "GET"},
+		{"user", "api/user/docs/GetAllDocuments", "GET"},
+		{"user", "api/user/docs/UpdateDocument", "PUT"},
+		{"user", "api/user/docs/DeleteDocument", "DELETE"},
+		{"user", "api/user/docs/ShareDocument", "POST"},
+
+
+		// version
+		{"admin", "api/user/version/GetAllVersions", "GET"},
+		{"admin", "api/user/version/RestoreVersion", "PUT"},
+
+		{"user", "api/user/version/GetAllVersions", "GET"},
+		{"user", "api/user/version/RestoreVersion", "PUT"},
 		
 	}
 

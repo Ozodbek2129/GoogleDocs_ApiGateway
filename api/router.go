@@ -2,7 +2,7 @@ package api
 
 import (
 	"api_gateway/api/handler"
-	middleware "api_gateway/api/middlerware"
+	"api_gateway/api/middleware"
 	"api_gateway/config"
 	"log/slog"
 
@@ -50,18 +50,24 @@ func (c *controllerImpl) SetupRoutes(h handler.Handler, logger *slog.Logger) {
 
 	users := router.Group("/user")
 	{
-		users.GET("/profile/:id", h.GetUserProfile)
-		users.PUT("/updateUser/:id", h.UpdateUser)
-		users.GET("/email/:email", h.GetUserByEmail)
+		users.GET("/getbyuser/:email", h.GetUSerByEmail)
+		users.PUT("/update_user", h.UpdateUser)
+		users.DELETE("/delete_user/:id", h.DeleteUser)
 	}
 
-	health := router.Group("/health")
+	docs := router.Group("/docs")
 	{
-		health.POST("/generate", h.GenerateHealthRecommendations)
-		health.GET("/getRealtimeHealthMonitoring/:user_id", h.GetRealtimeHealthMonitoring)
-		health.GET("/getDailyHealthSummary/:date", h.GetDailyHealthSummary)
-		health.GET("/getWeeklyHealthSummary/:start_date/:end_date", h.GetWeeklyHealthSummary)
+		docs.POST("/createDocument", h.CreateDocument)
+		docs.GET("/SearchDocument", h.SearchDocument)
+		docs.GET("/GetAllDocuments", h.GetAllDocuments)
+		docs.PUT("/UpdateDocument", h.UpdateDocument)
+		docs.DELETE("/DeleteDocument", h.DeleteDocument)
+		docs.POST("/ShareDocument", h.ShareDocument)
 	}
 
-	
+	version := router.Group("/version")
+	{
+		version.GET("/GetAllVersions", h.GetAllVersions)
+		version.PUT("/RestoreVersion", h.RestoreVersion)
+	}
 }

@@ -19,7 +19,7 @@ import (
 // @Success      200    {object}  pb.CreateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/createDocument [post]
+// @Router       /api/docs/createDocument [post]
 func (h Handler) CreateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -62,7 +62,7 @@ func (h Handler) CreateDocument(c *gin.Context) {
 // @Success      200    {object}  pb.CreateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/createDocument [get]
+// @Router       /api/docs/SearchDocument [get]
 func (h Handler) SearchDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -105,7 +105,7 @@ func (h Handler) SearchDocument(c *gin.Context) {
 // @Success      200    {object}  pb.GetAllDocumentsRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/GetAllDocuments [get]
+// @Router       /api/docs/GetAllDocuments [get]
 func (h Handler) GetAllDocuments(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -148,7 +148,7 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 // @Success      200    {object}  pb.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/UpdateDocument [put]
+// @Router       /api/docs/UpdateDocument [put]
 func (h Handler) UpdateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -191,7 +191,7 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 // @Success      200    {object}  pb.DeleteDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/DeleteDocument [put]
+// @Router       /api/docs/DeleteDocument [delete]
 func (h Handler) DeleteDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -234,7 +234,7 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 // @Success      200    {object}  pb.ShareDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
-// @Router       /docs/createDocument [post]
+// @Router       /api/docs/ShareDocument [post]
 func (h Handler) ShareDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
