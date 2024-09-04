@@ -2,33 +2,66 @@ package api
 
 import (
 	"api_gateway/api/handler"
+	middleware "api_gateway/api/middlerware"
+	"api_gateway/config"
+	"log/slog"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 
 	_ "api_gateway/api/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title        E-Commerce API
-// @version      1.0
-// @description  This is an API for e-commerce platform.
-// @termsOfService http://swagger.io/terms/
-// @contact.name  API Support
-// @contact.email support@swagger.io
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
-// @host          localhost:9876
-// @BasePath      /
-func NewRouter(h *handler.Handler) *gin.Engine {
-	router := gin.Default()
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+type Controller interface {
+	SetupRoutes(handler.Handler, *slog.Logger)
+	StartServer(config.Config) error
+}
 
-	user := router.Group("/user")
+type controllerImpl struct {
+	Port   string
+	Router *gin.Engine
+}
+
+func NewController(router *gin.Engine) Controller {
+	return &controllerImpl{Router: router}
+}
+
+func (c *controllerImpl) StartServer(cfg config.Config) error {
+	c.Port = cfg.API_GATEWAY
+	return c.Router.Run(c.Port)
+}
+
+// @title Api Gateway
+// @version 1.0
+// @description This is a sample server for Api-gateway Service
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+// @BasePath /api/v1
+// @schemes http
+func (c *controllerImpl) SetupRoutes(h handler.Handler, logger *slog.Logger) {
+	c.Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	router := c.Router.Group("/api")
+	router.Use(middleware.Check)
+	router.Use(middleware.CheckPermissionMiddleware(h.Enforcer))
+
+	users := router.Group("/user")
 	{
-		user.GET("getbyuser/:email",h.GetUSerByEmail)
-		user.PUT("/update_user",h.UpdateUser)
-		user.DELETE("/delete_user/:id",h.DeleteUser)
+		users.GET("/profile/:id", h.GetUserProfile)
+		users.PUT("/updateUser/:id", h.UpdateUser)
+		users.GET("/email/:email", h.GetUserByEmail)
 	}
-	return router
+
+	health := router.Group("/health")
+	{
+		health.POST("/generate", h.GenerateHealthRecommendations)
+		health.GET("/getRealtimeHealthMonitoring/:user_id", h.GetRealtimeHealthMonitoring)
+		health.GET("/getDailyHealthSummary/:date", h.GetDailyHealthSummary)
+		health.GET("/getWeeklyHealthSummary/:start_date/:end_date", h.GetWeeklyHealthSummary)
+	}
+
+	
 }

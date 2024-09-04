@@ -1,43 +1,24 @@
 package handler
 
 import (
-	"api_gateway/config"	
-	"api_gateway/genproto/user"
 	"api_gateway/genproto/docs"
-	"api_gateway/pkg/logger"
+	"api_gateway/genproto/user"
 	"log/slog"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-	// "github.com/casbin/casbin/v2"
+	"github.com/casbin/casbin/v2"
 )
 
 type Handler struct {
 	UserService user.UserServiceClient
 	Log         *slog.Logger
 	DocsService docs.DocsServiceClient
-	// Enforcer        *casbin.Enforcer
+	Enforcer    *casbin.Enforcer
 }
 
-func NewHandler() *Handler {
-	conf := config.Load()
-
-	userr, err := grpc.Dial(conf.USER_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		panic(err)
-	}
-
-	docss, err := grpc.Dial(conf.DOCS_SERVICE, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		panic(err)
-	}
-
-	users := user.NewUserServiceClient(userr)
-	docs := docs.NewDocsServiceClient(docss)
-
+func NewHandler(user user.UserServiceClient, docs docs.DocsServiceClient, logger *slog.Logger, Enforcer *casbin.Enforcer) *Handler {
 	return &Handler{
-		UserService: users,
-		Log:         logger.NewLogger(),
+		UserService: user,
+		Log:         logger,
 		DocsService: docs,
 	}
 }
