@@ -16,7 +16,7 @@ import (
 // @Param        email  path      string  true  "User Email"
 // @Success      200    {object}  user.GetUserResponse
 // @Failure      500    {object}  string
-// @Router       /user/getbyuser/{email} [get]
+// @Router       /api/user/getbyuser/{email} [get]
 func (h Handler) GetUSerByEmail(c *gin.Context) {
 	req := pb.GetUSerByEmailReq{
 		Email: c.Param("email"),
