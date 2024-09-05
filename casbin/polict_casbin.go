@@ -14,8 +14,8 @@ const (
 	host     = "postgres_container"
 	port     = "5432"
 	dbname   = "casbin"
-	username = "macbookpro"
-	password = "1111"
+	username = "postgres"
+	password = "1234"
 )
 
 func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
