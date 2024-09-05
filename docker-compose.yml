@@ -1,25 +1,25 @@
 version: '3.9'
 
 services:
- postgres-db3:
-   container_name: postgres3
-   image: postgres
-   environment:
-     - POSTGRES_USER=postgres
-     - POSTGRES_PASSWORD=1234
-     - POSTGRES_DB=casbin
-   ports:
-     - "5435:5432"
-   volumes:
-     - db:/data/postgres3
-   networks:
-     - google
+  postgres-db3:
+    container_name: postgres3
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=casbin
+    ports:
+      - "5435:5432"
+    volumes:
+      - db:/data/postgres3
+    networks:
+      - google
 
   api-services:
     container_name: api_gateway
     build: .
     depends_on:
-      db:
+      postgres-db3:
         condition: service_started
     networks:
       - google
