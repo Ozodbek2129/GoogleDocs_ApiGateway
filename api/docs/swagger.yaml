@@ -224,9 +224,9 @@ paths:
     put:
       consumes:
       - application/json
-      description: This endpoint updates a document.
+      description: Updates document and broadcasts changes via WebSocket.
       parameters:
-      - description: Request body for adding document
+      - description: Request body for updating document
         in: body
         name: update
         required: true
