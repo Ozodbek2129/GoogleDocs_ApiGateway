@@ -3,11 +3,14 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"sync"
+	"time"
 
 	pb "api_gateway/genproto/doccs"
 	"api_gateway/models"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 // @Summary      Create Document
@@ -126,12 +129,90 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 	c.JSON(200, res)
 }
 
+const saveDebounceTime = 5 * time.Second
+
+var clients = make(map[*websocket.Conn]bool)
+var wsMutex sync.Mutex
+var lastSavedContent = map[string]string{}
+
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+type WebSocketMessage struct {
+	Action   string `json:"action"`
+	Content  string `json:"content"`
+	DocsId   string `json:"docs_id"`
+	UserId   string `json:"user_id"`
+}
+
+
+func broadcastChanges(message WebSocketMessage) {
+	wsMutex.Lock()
+	defer wsMutex.Unlock()
+
+	for client := range clients {
+		err := client.WriteJSON(message)
+		if err != nil {
+			client.Close()
+			delete(clients, client)
+		}
+	}
+}
+
+
+func (h *Handler) WebSocketEndpoint(c *gin.Context) {
+	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		h.Log.Error("Failed to upgrade to WebSocket", "error", err)
+		return
+	}
+	defer conn.Close()
+
+	wsMutex.Lock()
+	clients[conn] = true
+	wsMutex.Unlock()
+
+	for {
+		var message WebSocketMessage
+		err := conn.ReadJSON(&message)
+		if err != nil {
+			wsMutex.Lock()
+			delete(clients, conn)
+			wsMutex.Unlock()
+			break
+		}
+	}
+}
+
+func saveDocumentWithDebounce(docId, content string, h *Handler, c *gin.Context, req *pb.UpdateDocumentReq) {
+
+	if lastSavedContent[docId] == content {
+		return
+	}
+
+	time.Sleep(saveDebounceTime)
+
+	if lastSavedContent[docId] != content {
+		res, err := h.DocsService.UpdateDocument(c, req)
+		if err != nil {
+			h.Log.Error("Error saving document", "error", err.Error())
+			return
+		}
+		lastSavedContent[docId] = content
+
+		fmt.Println("Document saved:", res)
+	}
+}
+
 // @Summary      Update Document
-// @Description  This endpoint updates a document.
+// @Description  Updates document and broadcasts changes via WebSocket.
 // @Tags         docs
 // @Accept       json
 // @Produce      json
-// @Param        update body models.CreateDoc true "Request body for adding document"
+// @Param        update body models.CreateDoc true "Request body for updating document"
 // @Success      200    {object}  doccs.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string
@@ -144,7 +225,6 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 		return
 	}
 	id := userId.(string)
-	fmt.Println(id)
 
 	var doc models.UpdateDocument
 
@@ -156,16 +236,17 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 
 	req := pb.UpdateDocumentReq{AuthorId: id, Title: doc.Title, Content: doc.Content, DocsId: doc.DocsId}
 
-	res, err := h.DocsService.UpdateDocument(c, &req)
-	if err != nil {
-		h.Log.Error("UpdateDocument function have problems.", "error", err.Error())
-		c.AbortWithStatusJSON(500, gin.H{
-			"error": err.Error(),
-		})
-		return
+	message := WebSocketMessage{
+		Action:  "update",
+		Content: doc.Content,
+		DocsId:  doc.DocsId,
+		UserId:  id,
 	}
+	broadcastChanges(message)
 
-	c.JSON(200, res)
+	go saveDocumentWithDebounce(doc.DocsId, doc.Content, &h, c, &req)
+
+	c.JSON(200, gin.H{"message": "Document update in progress"})
 }
 
 // @Summary      Delete Document
