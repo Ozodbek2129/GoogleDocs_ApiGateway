@@ -14,13 +14,18 @@ services:
       - db:/data/postgres3
     networks:
       - google
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api-services:
     container_name: api_gateway
     build: .
     depends_on:
       postgres-db3:
-        condition: service_started
+        condition: service_healthy
     networks:
       - google
     ports:
