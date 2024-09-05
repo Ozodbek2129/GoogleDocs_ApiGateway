@@ -21,7 +21,7 @@ services:
       - db-data:/var/lib/postgresql/data
 
   api-services:
-    container_name: api-gateway
+    container_name: api_gateway
     build: .
     depends_on:
       db:
@@ -29,7 +29,7 @@ services:
     networks:
       - google
     ports:
-      - "8080:8080"
+      - "9876:9876"
 
 networks:
   google:
