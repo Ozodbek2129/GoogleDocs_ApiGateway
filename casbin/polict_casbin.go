@@ -19,6 +19,21 @@ const (
 )
 
 func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
+	connSt := fmt.Sprintf("host=%s port=%s user=%s password=%s sslmode=disable", host, port, username, password)
+	db1, err1 := sql.Open("postgres", connSt)
+	if err1 != nil {
+		logger.Error("Error connecting to database", "error", err1.Error())
+		return nil, err1
+	}
+	defer db1.Close()
+
+	_, err1 = db1.Exec("DROP DATABASE IF EXISTS casbin")
+	if err1 != nil {
+		logger.Error("Error dropping Casbin database", "error", err1.Error())
+		return nil, err1
+	}
+
+	
 	connStr := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", host, port, username, dbname, password)
 	
 	db, err := sql.Open("postgres", connStr)
@@ -33,8 +48,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error pinging the database", "error", err.Error())
 		return nil, err
 	}
-	query := `DROP TABLE IF EXISTS "casbin_rule";`
-	db.Exec(query)
 
 	adapter, err := xormadapter.NewAdapter("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", host, port, username, dbname, password))
 	if err != nil {
