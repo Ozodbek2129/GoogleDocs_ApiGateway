@@ -155,7 +155,7 @@ const docTemplate = `{
         },
         "/api/docs/UpdateDocument": {
             "put": {
-                "description": "This endpoint updates a document.",
+                "description": "Updates document and broadcasts changes via WebSocket.",
                 "consumes": [
                     "application/json"
                 ],
@@ -168,7 +168,7 @@ const docTemplate = `{
                 "summary": "Update Document",
                 "parameters": [
                     {
-                        "description": "Request body for adding document",
+                        "description": "Request body for updating document",
                         "name": "update",
                         "in": "body",
                         "required": true,
