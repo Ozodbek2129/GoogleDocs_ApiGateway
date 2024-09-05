@@ -7,11 +7,10 @@ import (
 
 	"github.com/casbin/casbin/v2"
 	xormadapter "github.com/casbin/xorm-adapter/v2"
-	_ "github.com/lib/pq"
 )
 
 const (
-	host     = "postgres_container"
+	host     = "postgres3"
 	port     = "5432"
 	dbname   = "casbin"
 	username = "postgres"
@@ -50,7 +49,6 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error loading Casbin policy", "error", err.Error())
 		return nil, err
 	}
-
 	
 	policies := [][]string{
 		//user
@@ -99,6 +97,5 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 		logger.Error("Error saving Casbin policy", "error", err.Error())
 		return nil, err
 	}
-
 	return enforcer, nil
 }
