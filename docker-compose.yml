@@ -15,8 +15,6 @@ services:
    networks:
      - google
 
-
-
   api-services:
     container_name: api_gateway
     build: .
@@ -35,4 +33,4 @@ networks:
     external: true
 
 volumes:
-  db-data:
+  db:
