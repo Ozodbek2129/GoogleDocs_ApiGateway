@@ -19,23 +19,7 @@ const (
 )
 
 func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
-	connSt := fmt.Sprintf("host=%s port=%s user=%s password=%s sslmode=disable", host, port, username, password)
-	db1, err1 := sql.Open("postgres", connSt)
-	if err1 != nil {
-		logger.Error("Error connecting to database", "error", err1.Error())
-		return nil, err1
-	}
-	defer db1.Close()
-
-	_, err1 = db1.Exec("DROP DATABASE IF EXISTS casbin")
-	if err1 != nil {
-		logger.Error("Error dropping Casbin database", "error", err1.Error())
-		return nil, err1
-	}
-
-	
-	connStr := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", host, port, username, dbname, password)
-	
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s sslmode=disable", host, port, username, password)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		logger.Error("Error connecting to database", "error", err.Error())
@@ -43,9 +27,9 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 	}
 	defer db.Close()
 
-	err = db.Ping()
+	_, err = db.Exec("DROP DATABASE IF EXISTS casbin")
 	if err != nil {
-		logger.Error("Error pinging the database", "error", err.Error())
+		logger.Error("Error dropping Casbin database", "error", err.Error())
 		return nil, err
 	}
 
