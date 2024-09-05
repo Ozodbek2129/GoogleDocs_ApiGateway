@@ -5,8 +5,8 @@ services:
     image: postgres
     container_name: postgres_container
     environment:
-      - POSTGRES_USER=macbookpro
-      - POSTGRES_PASSWORD=1111   
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234   
       - POSTGRES_DB=casbin
     networks:
       - google
