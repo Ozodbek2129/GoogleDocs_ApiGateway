@@ -1,0 +1,57 @@
+name: API
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: go mod download
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            # Check if the Google_docs directory exists
+            if [ -d "Google_docs" ]; then
+              echo "Google_docs directory exists."
+              cd Google_docs
+              # Check if the ApiGateway repository directory exists
+              if [ -d "GoogleDocs_ApiGateway" ]; then
+                echo "Repository exists. Pulling latest changes..."
+                cd GoogleDocs_ApiGateway
+                git pull origin main
+              else
+                echo "Repository does not exist. Cloning repository..."
+                git clone git@github.com:Ozodbek2129/GoogleDocs_ApiGateway.git
+                cd GoogleDocs_ApiGateway
+              fi
+            else
+              echo "Google_docs directory does not exist. Creating directory..."
+              mkdir Google_docs
+              cd Google_docs
+              echo "Cloning repository..."
+              git clone git@github.com:Ozodbek2129/GoogleDocs_ApiGateway.git
+              cd GoogleDocs_ApiGateway
+            fi
+
+            # Stop and remove existing Docker containers
+            docker compose down || true
+
+            # Build and start Docker containers
+            docker compose up -d
