@@ -62,27 +62,27 @@ func CasbinEnforcer(logger *slog.Logger) (*casbin.Enforcer, error) {
 
 
 		// docs
-		{"admin", "api/user/docs/createDocument", "POST"},
-		{"admin", "api/user/docs/SearchDocument", "GET"},
-		{"admin", "api/user/docs/GetAllDocuments", "GET"},
-		{"admin", "api/user/docs/UpdateDocument", "PUT"},
-		{"admin", "api/user/docs/DeleteDocument", "DELETE"},
-		{"admin", "api/user/docs/ShareDocument", "POST"},
+		{"admin", "api/docs/createDocument", "POST"},
+		{"admin", "api/docs/SearchDocument", "GET"},
+		{"admin", "api/docs/GetAllDocuments", "GET"},
+		{"admin", "api/docs/UpdateDocument", "PUT"},
+		{"admin", "api/docs/DeleteDocument", "DELETE"},
+		{"admin", "api/docs/ShareDocument", "POST"},
 
-		{"user", "api/user/docs/createDocument", "POST"},
-		{"user", "api/user/docs/SearchDocument", "GET"},
-		{"user", "api/user/docs/GetAllDocuments", "GET"},
-		{"user", "api/user/docs/UpdateDocument", "PUT"},
-		{"user", "api/user/docs/DeleteDocument", "DELETE"},
-		{"user", "api/user/docs/ShareDocument", "POST"},
+		{"user", "api/docs/createDocument", "POST"},
+		{"user", "api/docs/SearchDocument", "GET"},
+		{"user", "api/docs/GetAllDocuments", "GET"},
+		{"user", "api/docs/UpdateDocument", "PUT"},
+		{"user", "api/docs/DeleteDocument", "DELETE"},
+		{"user", "api/docs/ShareDocument", "POST"},
 
 
 		// version
-		{"admin", "api/user/version/GetAllVersions", "GET"},
-		{"admin", "api/user/version/RestoreVersion", "PUT"},
+		{"admin", "api/version/GetAllVersions", "GET"},
+		{"admin", "api/version/RestoreVersion", "PUT"},
 
-		{"user", "api/user/version/GetAllVersions", "GET"},
-		{"user", "api/user/version/RestoreVersion", "PUT"},
+		{"user", "api/version/GetAllVersions", "GET"},
+		{"user", "api/version/RestoreVersion", "PUT"},
 		
 	}
 

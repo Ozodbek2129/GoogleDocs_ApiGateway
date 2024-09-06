@@ -9,3 +9,8 @@ time=2024-09-05T19:27:32.514+05:00 level=INFO msg="API Gateway started successfu
 time=2024-09-05T19:27:32.567+05:00 level=ERROR msg="Error dropping Casbin database" error="pq: password authentication failed for user \"postgres\""
 time=2024-09-05T19:27:32.567+05:00 level=ERROR msg="Error initializing enforcer" error="pq: password authentication failed for user \"postgres\""
 time=2024-09-05T19:27:53.732+05:00 level=INFO msg="API Gateway started successfully!"
+time=2024-09-06T18:25:48.789+05:00 level=INFO msg="API Gateway started successfully!"
+time=2024-09-06T18:25:51.492+05:00 level=ERROR msg="Error dropping Casbin database" error="dial tcp: lookup postgres3: no such host"
+time=2024-09-06T18:25:51.493+05:00 level=ERROR msg="Error initializing enforcer" error="dial tcp: lookup postgres3: no such host"
+time=2024-09-06T18:26:23.949+05:00 level=INFO msg="API Gateway started successfully!"
+time=2024-09-06T18:27:05.332+05:00 level=INFO msg="API Gateway started successfully!"

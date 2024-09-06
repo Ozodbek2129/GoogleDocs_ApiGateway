@@ -64,7 +64,7 @@ func (casb *casbinPermission) CheckPermission(c *gin.Context) (bool, error) {
 		return false, errors.New("error in get role")
 	}
 	obj := c.FullPath()
-	fmt.Println(8)
+	fmt.Println(sub, obj, act)
 
 	ok, err := casb.enforcer.Enforce(sub, obj, act)
 	if err != nil {
@@ -91,11 +91,13 @@ func CheckPermissionMiddleware(enf *casbin.Enforcer) gin.HandlerFunc {
 
 		if err != nil {
 			c.AbortWithError(500, err)
+			return
 		}
 		if !result {
 			c.AbortWithStatusJSON(401, gin.H{
 				"message": "Forbidden",
 			})
+			return
 		}
 
 		c.Next()
