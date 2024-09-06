@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/api/docs/DeleteDocument": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint deletes a document.",
                 "consumes": [
                     "application/json"
@@ -63,6 +68,11 @@ const docTemplate = `{
         },
         "/api/docs/GetAllDocuments": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint gets all documents.",
                 "consumes": [
                     "application/json"
@@ -109,6 +119,11 @@ const docTemplate = `{
         },
         "/api/docs/ShareDocument": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint shares a document.",
                 "consumes": [
                     "application/json"
@@ -155,6 +170,11 @@ const docTemplate = `{
         },
         "/api/docs/UpdateDocument": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Updates document and broadcasts changes via WebSocket.",
                 "consumes": [
                     "application/json"
@@ -169,7 +189,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "Request body for updating document",
-                        "name": "update",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -201,6 +221,11 @@ const docTemplate = `{
         },
         "/api/docs/createDocument": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint creates a new document.",
                 "consumes": [
                     "application/json"
@@ -244,6 +269,11 @@ const docTemplate = `{
         },
         "/api/docs/searchDocument": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint searches for a document by title and document ID.",
                 "consumes": [
                     "application/json"
@@ -293,6 +323,11 @@ const docTemplate = `{
         },
         "/api/user/getbyuser/{email}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves user details by email.",
                 "consumes": [
                     "application/json"
@@ -423,6 +458,11 @@ const docTemplate = `{
         },
         "/user/delete_user/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint deletes a user based on the provided user ID.",
                 "consumes": [
                     "application/json"
@@ -467,6 +507,11 @@ const docTemplate = `{
         },
         "/user/update_user": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint updates the user's details based on the provided information.",
                 "consumes": [
                     "application/json"

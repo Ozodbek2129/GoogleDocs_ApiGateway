@@ -9,6 +9,11 @@
     "paths": {
         "/api/docs/DeleteDocument": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint deletes a document.",
                 "consumes": [
                     "application/json"
@@ -55,6 +60,11 @@
         },
         "/api/docs/GetAllDocuments": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint gets all documents.",
                 "consumes": [
                     "application/json"
@@ -101,6 +111,11 @@
         },
         "/api/docs/ShareDocument": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint shares a document.",
                 "consumes": [
                     "application/json"
@@ -147,6 +162,11 @@
         },
         "/api/docs/UpdateDocument": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Updates document and broadcasts changes via WebSocket.",
                 "consumes": [
                     "application/json"
@@ -161,7 +181,7 @@
                 "parameters": [
                     {
                         "description": "Request body for updating document",
-                        "name": "update",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -193,6 +213,11 @@
         },
         "/api/docs/createDocument": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint creates a new document.",
                 "consumes": [
                     "application/json"
@@ -236,6 +261,11 @@
         },
         "/api/docs/searchDocument": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint searches for a document by title and document ID.",
                 "consumes": [
                     "application/json"
@@ -285,6 +315,11 @@
         },
         "/api/user/getbyuser/{email}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint retrieves user details by email.",
                 "consumes": [
                     "application/json"
@@ -415,6 +450,11 @@
         },
         "/user/delete_user/{id}": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint deletes a user based on the provided user ID.",
                 "consumes": [
                     "application/json"
@@ -459,6 +499,11 @@
         },
         "/user/update_user": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint updates the user's details based on the provided information.",
                 "consumes": [
                     "application/json"

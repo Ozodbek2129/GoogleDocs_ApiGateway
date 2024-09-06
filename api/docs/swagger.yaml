@@ -157,6 +157,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Delete Document
       tags:
       - docs
@@ -187,6 +189,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Get all Document
       tags:
       - docs
@@ -217,6 +221,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Share Document
       tags:
       - docs
@@ -228,7 +234,7 @@ paths:
       parameters:
       - description: Request body for updating document
         in: body
-        name: update
+        name: body
         required: true
         schema:
           $ref: '#/definitions/models.CreateDoc'
@@ -247,6 +253,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Update Document
       tags:
       - docs
@@ -275,6 +283,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Create Document
       tags:
       - docs
@@ -307,6 +317,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.Error'
+      security:
+      - ApiKeyAuth: []
       summary: Search Document
       tags:
       - docs
@@ -332,6 +344,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Get user by email
       tags:
       - user
@@ -421,6 +435,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Delete user
       tags:
       - user
@@ -452,6 +468,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Update user details
       tags:
       - user
