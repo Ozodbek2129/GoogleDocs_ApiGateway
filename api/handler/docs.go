@@ -18,6 +18,7 @@ import (
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        title  query  string  false "Title of the document"
 // @Success      200   {object}  doccs.CreateDocumentRes
 // @Failure      400   {object}  models.Error
@@ -54,6 +55,7 @@ func (h Handler) CreateDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        title  query  string  false "Title of the document"
 // @Param        docsId query  string  false "Document ID"
 // @Success      200    {object}  doccs.SearchDocumentRes
@@ -92,6 +94,7 @@ func (h Handler) SearchDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        get_all body models.CreateDoc true "Request body for getting all documents"
 // @Success      200    {object}  doccs.GetAllDocumentsRes
 // @Failure      400    {object}  string
@@ -212,6 +215,7 @@ func saveDocumentWithDebounce(docId, content string, h *Handler, c *gin.Context,
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        update body models.CreateDoc true "Request body for updating document"
 // @Success      200    {object}  doccs.UpdateDocumentRes
 // @Failure      400    {object}  string
@@ -254,6 +258,7 @@ func (h Handler) UpdateDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        delete body models.CreateDoc true "Request body for deleting document"
 // @Success      200    {object}  doccs.DeleteDocumentRes
 // @Failure      400    {object}  string
@@ -296,6 +301,7 @@ func (h Handler) DeleteDocument(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        share body models.CreateDoc true "Request body for sharing document"
 // @Success      200    {object}  doccs.ShareDocumentRes
 // @Failure      400    {object}  string

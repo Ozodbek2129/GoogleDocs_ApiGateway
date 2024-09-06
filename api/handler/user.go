@@ -13,6 +13,7 @@ import (
 // @Tags         user
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        email  path      string  true  "User Email"
 // @Success      200    {object}  user.GetUserResponse
 // @Failure      500    {object}  string
@@ -39,6 +40,7 @@ func (h Handler) GetUSerByEmail(c *gin.Context) {
 // @Tags         user
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        user  body      user.UpdateUserRequest  true  "User Update Data"
 // @Success      200    {object}  user.UpdateUserRespose
 // @Failure      400    {object}  string
@@ -69,6 +71,7 @@ func (h Handler) UpdateUser(c *gin.Context) {
 // @Tags         user
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        id  path      string  true  "User ID"
 // @Success      200    {object}  user.DeleteUserr
 // @Failure      400    {object}  string

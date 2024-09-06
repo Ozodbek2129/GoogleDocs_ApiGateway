@@ -54,5 +54,5 @@ jobs:
             docker compose down || true
 
             # Build and start Docker containers
-            docker compose up -d 
+            docker compose up -d --build
             
