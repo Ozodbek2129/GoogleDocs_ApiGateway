@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	// _ "api_gateway/api/docs"
+	_ "api_gateway/api/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
