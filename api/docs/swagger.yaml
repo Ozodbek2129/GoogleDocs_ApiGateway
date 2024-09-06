@@ -79,6 +79,15 @@ definitions:
       title:
         type: string
     type: object
+  models.UpdateDocument:
+    properties:
+      content:
+        type: string
+      docs_id:
+        type: string
+      title:
+        type: string
+    type: object
   user.DeleteUserr:
     properties:
       message:
@@ -237,7 +246,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.CreateDoc'
+          $ref: '#/definitions/models.UpdateDocument'
       produces:
       - application/json
       responses:
@@ -376,6 +385,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Get All Document Version
       tags:
       - docs
@@ -406,6 +417,8 @@ paths:
           description: Internal Server Error
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Restore Document's Version
       tags:
       - docs

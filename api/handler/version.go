@@ -15,6 +15,7 @@ import (
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        get_all body models.GetAllVersions true "Request body for getting all versions of document"
 // @Success      200    {object}  doccs.GetAllVersionsRes
 // @Failure      400    {object}  string
@@ -58,6 +59,7 @@ func (h Handler) GetAllVersions(c *gin.Context) {
 // @Tags         docs
 // @Accept       json
 // @Produce      json
+// @Security     ApiKeyAuth
 // @Param        restore body models.CreateDoc true "Request body for adding document"
 // @Success      200    {object}  doccs.RestoreVersionRes
 // @Failure      400    {object}  string

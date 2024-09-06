@@ -216,7 +216,7 @@ func saveDocumentWithDebounce(docId, content string, h *Handler, c *gin.Context,
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        body body models.CreateDoc true "Request body for updating document"
+// @Param        body body models.UpdateDocument true "Request body for updating document"
 // @Success      200    {object}  doccs.UpdateDocumentRes
 // @Failure      400    {object}  string
 // @Failure      500    {object}  string

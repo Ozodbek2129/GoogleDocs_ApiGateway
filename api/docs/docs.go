@@ -193,7 +193,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.CreateDoc"
+                            "$ref": "#/definitions/models.UpdateDocument"
                         }
                     }
                 ],
@@ -366,6 +366,11 @@ const docTemplate = `{
         },
         "/api/version/GetAllVersions": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint gets all documents version.",
                 "consumes": [
                     "application/json"
@@ -412,6 +417,11 @@ const docTemplate = `{
         },
         "/api/vesion/RestoreVersion": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "This endpoint restores a document's version.",
                 "consumes": [
                     "application/json"
@@ -679,6 +689,20 @@ const docTemplate = `{
         "models.GetAllVersions": {
             "type": "object",
             "properties": {
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateDocument": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "docs_id": {
+                    "type": "string"
+                },
                 "title": {
                     "type": "string"
                 }
