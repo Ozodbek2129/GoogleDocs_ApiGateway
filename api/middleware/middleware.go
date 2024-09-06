@@ -26,7 +26,7 @@ func Check(c *gin.Context) {
 	}
 	fmt.Println(2)
 
-	_, err := auth.ValidateAccessToken(accessToken)
+	claims, err := auth.ValidateAccessToken(accessToken)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"error": "Invalid token provided",
@@ -34,6 +34,7 @@ func Check(c *gin.Context) {
 		return
 	}
 	fmt.Println(3)
+	c.Set("user_id", claims["user_id"].(string))
 	c.Next()
 }
 
@@ -68,6 +69,7 @@ func (casb *casbinPermission) CheckPermission(c *gin.Context) (bool, error) {
 
 	ok, err := casb.enforcer.Enforce(sub, obj, act)
 	if err != nil {
+		fmt.Println("ishlamadi")
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"Error": "Internal server error",
 		})
@@ -99,7 +101,7 @@ func CheckPermissionMiddleware(enf *casbin.Enforcer) gin.HandlerFunc {
 			})
 			return
 		}
-
+		fmt.Println("nima gap ")
 		c.Next()
 	}
 }

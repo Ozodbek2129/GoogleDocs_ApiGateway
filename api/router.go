@@ -57,7 +57,7 @@ func (c *controllerImpl) SetupRoutes(h handler.Handler, logger *slog.Logger) {
 
 	docs := router.Group("/docs")
 	{
-		docs.POST("/createDocument", h.CreateDocument)
+		docs.POST("/createDocument/:title", h.CreateDocument)
 		docs.GET("/SearchDocument", h.SearchDocument)
 		docs.GET("/GetAllDocuments", h.GetAllDocuments)
 		docs.PUT("/UpdateDocument", h.UpdateDocument)

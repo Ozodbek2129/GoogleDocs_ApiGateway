@@ -20,5 +20,6 @@ func NewHandler(user user.UserServiceClient, docs doccs.DocsServiceClient, logge
 		UserService: user,
 		Log:         logger,
 		DocsService: docs,
+		Enforcer: Enforcer,
 	}
 }

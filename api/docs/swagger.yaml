@@ -267,14 +267,14 @@ paths:
       summary: Update Document
       tags:
       - docs
-  /api/docs/createDocument:
+  /api/docs/createDocument/{title}:
     post:
       consumes:
       - application/json
       description: This endpoint creates a new document.
       parameters:
       - description: Title of the document
-        in: query
+        in: path
         name: title
         type: string
       produces:

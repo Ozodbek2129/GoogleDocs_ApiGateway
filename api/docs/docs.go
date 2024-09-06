@@ -219,7 +219,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/docs/createDocument": {
+        "/api/docs/createDocument/{title}": {
             "post": {
                 "security": [
                     {
@@ -242,7 +242,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Title of the document",
                         "name": "title",
-                        "in": "query"
+                        "in": "path"
                     }
                 ],
                 "responses": {

@@ -8,12 +8,12 @@ const (
 	SIGNING_KEY = "GOoGLe_DoCs"
 )
 
-func ValidateAccessToken(tokenStr string) (bool, error) {
-	_, err := ExtractAccessClaim(tokenStr)
+func ValidateAccessToken(tokenStr string) (jwt.MapClaims, error) {
+	claims, err := ExtractAccessClaim(tokenStr)
 	if err != nil {
-		return false, err
+		return *claims, err
 	}
-	return true, nil
+	return *claims, nil
 }
 
 func ExtractAccessClaim(tokenStr string) (*jwt.MapClaims, error) {

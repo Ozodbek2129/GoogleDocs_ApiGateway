@@ -19,11 +19,11 @@ import (
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        title  query  string  false "Title of the document"
+// @Param        title  path  string  false "Title of the document"
 // @Success      200   {object}  doccs.CreateDocumentRes
 // @Failure      400   {object}  models.Error
 // @Failure      500   {object}  models.Error
-// @Router       /api/docs/createDocument [post]
+// @Router       /api/docs/createDocument/{title} [post]
 func (h Handler) CreateDocument(c *gin.Context) {
 	userId, exists := c.Get("user_id")
 	if !exists {
@@ -34,7 +34,7 @@ func (h Handler) CreateDocument(c *gin.Context) {
 	id := userId.(string)
 	fmt.Println(id)
 
-	title := c.Query("title")
+	title := c.Param("title")
 
 	req := pb.CreateDocumentReq{AuthorId: id, Title: title}
 
@@ -46,6 +46,9 @@ func (h Handler) CreateDocument(c *gin.Context) {
 		})
 		return
 	}
+
+	fmt.Println(title)
+	fmt.Println(userId)
 
 	c.JSON(200, res)
 }
