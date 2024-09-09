@@ -177,12 +177,18 @@ paths:
       - application/json
       description: This endpoint gets all documents.
       parameters:
-      - description: Request body for getting all documents
-        in: body
-        name: get_all
-        required: true
-        schema:
-          $ref: '#/definitions/models.CreateDoc'
+      - description: Limit for pagination
+        in: query
+        name: limit
+        type: integer
+      - description: Page number for pagination
+        in: query
+        name: page
+        type: integer
+      - description: Document ID filter
+        in: query
+        name: docs_id
+        type: string
       produces:
       - application/json
       responses:

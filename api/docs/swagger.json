@@ -78,13 +78,22 @@
                 "summary": "Get all Document",
                 "parameters": [
                     {
-                        "description": "Request body for getting all documents",
-                        "name": "get_all",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.CreateDoc"
-                        }
+                        "type": "integer",
+                        "description": "Limit for pagination",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number for pagination",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Document ID filter",
+                        "name": "docs_id",
+                        "in": "query"
                     }
                 ],
                 "responses": {

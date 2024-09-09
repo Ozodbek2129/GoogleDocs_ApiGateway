@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"sync"
 	"time"
 
@@ -98,10 +99,12 @@ func (h Handler) SearchDocument(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Security     ApiKeyAuth
-// @Param        get_all body models.CreateDoc true "Request body for getting all documents"
-// @Success      200    {object}  doccs.GetAllDocumentsRes
-// @Failure      400    {object}  string
-// @Failure      500    {object}  string
+// @Param        limit   query   int    false  "Limit for pagination"
+// @Param        page    query   int    false  "Page number for pagination"
+// @Param        docs_id query   string false  "Document ID filter"
+// @Success      200     {object}  doccs.GetAllDocumentsRes
+// @Failure      400     {object}  string
+// @Failure      500     {object}  string
 // @Router       /api/docs/GetAllDocuments [get]
 func (h Handler) GetAllDocuments(c *gin.Context) {
 	userId, exists := c.Get("user_id")
@@ -111,17 +114,26 @@ func (h Handler) GetAllDocuments(c *gin.Context) {
 		return
 	}
 	id := userId.(string)
-	fmt.Println(id)
 
-	var doc models.GetAllDocuments
+	limitStr := c.Query("limit")
+	pageStr := c.Query("page")
+	docsId := c.Query("docs_id")
 
-	if err := c.ShouldBindJSON(&doc); err != nil {
-		h.Log.Error("Error binding JSON: ", "error", err)
-		c.JSON(400, models.Error{Message: err.Error()})
-		return
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		limit = 10
+	}
+	page, err := strconv.Atoi(pageStr)
+	if err != nil {
+		page = 1
 	}
 
-	req := pb.GetAllDocumentsReq{AuthorId: id, Limit: doc.Limit, Page: doc.Page, DocsId: doc.DocsId}
+	req := pb.GetAllDocumentsReq{
+		AuthorId: id,
+		Limit:    int32(limit),
+		Page:     int32(page),
+		DocsId:   docsId,
+	}
 
 	res, err := h.DocsService.GetAllDocuments(c, &req)
 	if err != nil {
@@ -148,12 +160,11 @@ var upgrader = websocket.Upgrader{
 }
 
 type WebSocketMessage struct {
-	Action   string `json:"action"`
-	Content  string `json:"content"`
-	DocsId   string `json:"docs_id"`
-	UserId   string `json:"user_id"`
+	Action  string `json:"action"`
+	Content string `json:"content"`
+	DocsId  string `json:"docs_id"`
+	UserId  string `json:"user_id"`
 }
-
 
 func broadcastChanges(message WebSocketMessage) {
 	wsMutex.Lock()
@@ -167,7 +178,6 @@ func broadcastChanges(message WebSocketMessage) {
 		}
 	}
 }
-
 
 func (h *Handler) WebSocketEndpoint(c *gin.Context) {
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
